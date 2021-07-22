@@ -14,7 +14,11 @@ const Form = () =>{
     })
 
 
-const [formErrors, setFormErrors] = useState({})
+const [formErrors, setFormErrors] = useState({
+    title:"",
+    price:"",
+    description:""
+})
 
 
     const changeHandler = (e)=>{
@@ -36,7 +40,7 @@ const [formErrors, setFormErrors] = useState({})
                 navigate("/")
             }else{
                 console.log("That's a red card!, you didn't fill this out properly")
-                // setFormErrors(res.data.error.errors) still working on getting validations to work
+                setFormErrors(res.data.error.errors)
             }
         })
         .catch(err=> console.log("penalty when submitting the form", err))
@@ -49,13 +53,15 @@ const [formErrors, setFormErrors] = useState({})
                 <div className="form-group">
                     <label>Title:</label>
                     <input className="form-control mb-2" type="text" name="title" onChange={changeHandler}/>
-                    <p className="text-danger">{formErrors.title}</p>
+                    <p className="text-danger">{formErrors.title.message}</p>
                     <br/>
                     <label>Price:</label>
                     <input className="form-control mb-2" type="text" name="price" onChange={changeHandler}/>
+                    <p className="text-danger">{formErrors.price.message}</p>
                     <br/>
                     <label>Description:</label>
                     <textarea className="form-control mb-2" cols="30" rows="1" name="description" onChange={changeHandler}/>
+                    <p className="text-danger">{formErrors.description.message}</p>
                     <br/>
                     <input type="submit" value="Create" className="btn btn-primary"/>
                 </div>
